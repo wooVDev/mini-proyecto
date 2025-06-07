@@ -71,3 +71,28 @@ button[name="delete"] {
 button[name="delete"]:hover {
   background-color: #c0392b;
 }
+
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.filters a {
+  padding: 6px 12px;
+  border-radius: 6px;
+  background-color: #ddd;
+  text-decoration: none;
+  color: #333;
+}
+
+.filters .active {
+  background-color: #4f8ef7;
+  color: white;
+}
+
+.completed .task-text {
+  text-decoration: line-through;
+  color: gray;
+}

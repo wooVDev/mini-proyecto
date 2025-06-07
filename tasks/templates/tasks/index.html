@@ -9,32 +9,32 @@
     <div class="container">
       <h1>Mis Tareas</h1>
 
+      <!-- Formulario agregar -->
       <form method="POST">
         {% csrf_token %}
         <input type="text" name="title" placeholder="Nueva tarea" required />
         <button type="submit">Agregar</button>
       </form>
 
+      <!-- Filtro -->
+      <div class="filters">
+        <a href="/?filter=all" class="{% if filter == 'all' %}active{% endif %}">Todas</a>
+        <a href="/?filter=completed" class="{% if filter == 'completed' %}active{% endif %}">Completadas</a>
+        <a href="/?filter=pending" class="{% if filter == 'pending' %}active{% endif %}">Pendientes</a>
+      </div>
+
+      <!-- Lista -->
       <ul>
         {% for task in tasks %}
-        <li>
-          <form
-            method="POST"
-            style="
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-            "
-          >
-            {% csrf_token %} {{ task.title }}
-            <button
-              type="submit"
-              name="delete"
-              value="{{ task.id }}"
-              style="background: #e74c3c"
-            >
-              ✖
-            </button>
+        <li class="{% if task.completed %}completed{% endif %}">
+          <form method="POST" style="display: flex; align-items: center; gap: 10px;">
+            {% csrf_token %}
+            <button type="submit" name="toggle" value="{{ task.id }}" title="Marcar completada">✔</button>
+            <span class="task-text">{{ task.title }}</span>
+            <small>{{ task.created_at|date:"d M Y - H:i" }}</small>
+            <input type="text" name="edit_title" placeholder="Nuevo título..." />
+            <button type="submit" name="edit_id" value="{{ task.id }}">✏️</button>
+            <button type="submit" name="delete" value="{{ task.id }}" style="background: #e74c3c">✖</button>
           </form>
         </li>
         {% empty %}
